@@ -5,8 +5,8 @@ import com.teko.ezcopy.framework.AbstractDeepCopier;
 import java.io.Serializable;
 
 public class DeepCopier extends AbstractDeepCopier<Serializable> {
-    private ObjectWriter ow;
-    private ObjectReader or;
+    private final ObjectWriter ow;
+    private final ObjectReader or;
 
     public DeepCopier(Serializable obj) {
         this.template = obj;

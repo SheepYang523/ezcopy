@@ -1,10 +1,12 @@
 package com.teko;
 
+import com.teko.ezcopy.core.CollectionRefReplicator;
 import com.teko.ezcopy.core.DeepCopier;
+import com.teko.ezcopy.core.MapRefReplicator;
 import org.junit.Test;
 
 import java.io.*;
-import java.util.LinkedList;
+import java.util.*;
 
 
 /**
@@ -64,11 +66,24 @@ public class AppTest{
     }
 
     @Test
-    public void CopyTest() {
-        Integer i = 1000;
-        DeepCopier dc = new DeepCopier(i);
-        Integer i1 = dc.getone(i.getClass());
-        Integer i2 = dc.getone(Integer.class);
-        System.out.println(i1 == i2);
+    public void MapRefReplicatorCopyTest() {
+        HashMap<LinkedList<HashMap<Integer, Integer>>, HashMap<Integer, LinkedList<Integer>>> map = new HashMap<>();
+        HashMap<Integer, Integer> map1 = new HashMap<>();
+        map1.put(1, 2);
+        map1.put(2, 3);
+        LinkedList<HashMap<Integer, Integer>> l1 = new LinkedList<>();
+        l1.add(map1);
+        LinkedList<Integer> l2 = new LinkedList<>();
+        l2.add(10);
+        l2.add(11);
+        HashMap<Integer, LinkedList<Integer>> map2 = new HashMap<>();
+        map2.put(0, l2);
+        map.put(l1, map2);
+        MapRefReplicator copier = new MapRefReplicator(map);
+        HashMap<LinkedList<HashMap<Integer, Integer>>, HashMap<Integer, LinkedList<Integer>>> copy =
+                (HashMap<LinkedList<HashMap<Integer, Integer>>, HashMap<Integer, LinkedList<Integer>>>) copier.copyHierarchy();
+        System.out.println(copy == map);
+        System.out.println(copy);
+        System.out.println(map);
     }
 }
